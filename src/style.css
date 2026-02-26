@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Tokyo Night theme */
+@theme {
+  --color-tn-bg: #1a1b26;
+  --color-tn-bg-alt: #24283b;
+  --color-tn-bg-elevated: #292e42;
+  --color-tn-border: #3b4261;
+  --color-tn-fg: #a9b1d6;
+  --color-tn-fg-muted: #565f89;
+  --color-tn-fg-dim: #414868;
+  --color-tn-accent: #7aa2f7;
+  --color-tn-cyan: #7dcfff;
+  --color-tn-purple: #bb9af7;
+  --color-tn-green: #9ece6a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-tn-bg text-tn-fg antialiased;
+  @apply selection:bg-tn-accent/30 selection:text-tn-fg;
+}
+
+/* Tokyo Night scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-tn-bg-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-tn-border);
+  border-radius: 9999px;
+  border: 2px solid var(--color-tn-bg-alt);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-tn-fg-muted);
+}
+
+/* KaTeX math in Tokyo Night */
+.katex {
+  color: var(--color-tn-fg);
+}
