@@ -26,22 +26,19 @@ const App = () => {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  if (path.startsWith('#/essay/')) {
-    const slug = path.replace('#/essay/', '');
-    const essay = blogs.find(e => e.slug === slug);
-    if (!essay) return <NotFound />;
-    const { prev, next } = getPrevNext(blogs, essay);
-    return <Post essay={essay} prev={prev} next={next} />;
-  }
-
   if (path === '#/blogs' || path.startsWith('#/blogs/')) {
-    const rest = path.replace('#/blogs', '').replace(/^\//, '');
+    const rest = decodeURIComponent(path.replace('#/blogs', '').replace(/^\//, ''));
     if (rest === '') {
       return <AllBlogs blogs={blogs} />;
     }
-    const category = decodeURIComponent(rest);
-    const categoryBlogs = blogs.filter(b => b.category === category);
-    return <CategoryBlogs category={category} blogs={categoryBlogs} />;
+    if (rest.includes('/')) {
+      const essay = blogs.find(e => e.slug === rest);
+      if (!essay) return <NotFound />;
+      const { prev, next } = getPrevNext(blogs, essay);
+      return <Post essay={essay} prev={prev} next={next} />;
+    }
+    const categoryBlogs = blogs.filter(b => b.category === rest);
+    return <CategoryBlogs category={rest} blogs={categoryBlogs} />;
   }
 
   return <Landing blogs={blogs} projects={projects} />;

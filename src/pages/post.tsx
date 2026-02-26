@@ -1,6 +1,6 @@
 import type { ContentItem } from '../lib/content';
 import { renderMarkdownWithMath } from '../lib/markdown';
-import { BackNav, PrevNextNav } from '../components';
+import { PrevNextNav } from '../components';
 import 'katex/dist/katex.min.css';
 
 interface PostProps {
@@ -13,10 +13,18 @@ const PROSE_CLASSES = 'prose prose-invert prose-lg max-w-none prose-headings:tex
 
 export default function Post({ essay, prev, next }: PostProps) {
   const htmlContent = renderMarkdownWithMath(essay.content);
+  const backHref = essay.category ? `#/blogs/${encodeURIComponent(essay.category)}` : '#/blogs';
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-20">
-      <BackNav />
+      <nav className="mb-12 flex items-center gap-6">
+        <a href={backHref} className="text-sm font-bold text-tn-fg-muted hover:text-tn-fg transition uppercase">
+          ← {essay.category ? 'Back to category' : 'All blogs'}
+        </a>
+        <a href="#/blogs" className="text-sm font-bold text-tn-fg-muted hover:text-tn-fg transition uppercase">
+          All blogs
+        </a>
+      </nav>
       <article>
         <header className="mb-12">
           {essay.image && (

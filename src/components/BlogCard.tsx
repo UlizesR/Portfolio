@@ -7,7 +7,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ blog, showCategory = true }: BlogCardProps) {
   return (
-    <a href={`#/essay/${blog.slug}`} className="group block">
+    <a href={`#/blogs/${blog.slug.split('/').map(encodeURIComponent).join('/')}`} className="group block">
       <div className="aspect-[4/5] bg-tn-bg-alt rounded-3xl mb-6 overflow-hidden relative border border-tn-border">
         {showCategory && blog.category && (
           <span className="absolute top-4 left-4 bg-tn-bg/90 px-3 py-1 text-[10px] font-bold uppercase z-10 rounded-full shadow-sm text-tn-fg">

@@ -98,17 +98,17 @@ export function getPrevNext(
   items: ContentItem[],
   current: ContentItem
 ): { prev?: ContentItem; next?: ContentItem } {
-  if (!current.series || current.part == null) return {};
+  if (!current.category) return {};
 
-  const inSeries = items
-    .filter(i => i.series === current.series && i.part != null)
-    .sort((a, b) => (a.part ?? 0) - (b.part ?? 0));
+  const inCategory = items
+    .filter(i => i.category === current.category)
+    .sort((a, b) => a.slug.localeCompare(b.slug));
 
-  const idx = inSeries.findIndex(i => i.slug === current.slug);
+  const idx = inCategory.findIndex(i => i.slug === current.slug);
   if (idx < 0) return {};
 
   return {
-    prev: idx > 0 ? inSeries[idx - 1] : undefined,
-    next: idx < inSeries.length - 1 ? inSeries[idx + 1] : undefined,
+    prev: idx > 0 ? inCategory[idx - 1] : undefined,
+    next: idx < inCategory.length - 1 ? inCategory[idx + 1] : undefined,
   };
 }
